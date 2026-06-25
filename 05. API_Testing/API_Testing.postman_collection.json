@@ -35,7 +35,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "const searchedText = pm.collectionVariables.get(\"searched_text\");\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
@@ -111,7 +111,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
               "    pm.expect(pm.response.code).to.eql(200);\r",
@@ -176,7 +176,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
               "    pm.expect(pm.response.code).to.eql(200);\r",
@@ -267,7 +267,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
               "    pm.expect(pm.response.code).to.eql(200);\r",
@@ -278,7 +278,7 @@
               "     qty = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.totalQty;\r",
               "    //   pm.collectionVariables.set(\"totalQty_After_add\",qty);\r",
               "\r",
-              "      const expectedQty = pm.collectionVariables.get(\"total_Qty\");\r",
+              "      const expectedQty = Number(pm.collectionVariables.get(\"total_Qty\"));\r",
               "\r",
               "pm.test(`Validate total quantity is equal to ${expectedQty}`, () =>{\r",
               "    pm.expect(qty).to.eql(expectedQty);\r",
@@ -387,7 +387,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
               "    pm.expect(pm.response.code).to.eql(200);\r",
@@ -471,7 +471,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
               "    pm.expect(pm.response.code).to.eql(200);\r",
@@ -556,7 +556,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const responseBody = pm.response.json();\r",
+              "var responseBody = pm.response.json();\r",
               "\r",
               "pm.test(\"Validate status code is 200\", () => {\r",
               "    pm.expect(pm.response.code).to.eql(200);\r",
