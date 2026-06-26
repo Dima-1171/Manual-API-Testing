@@ -1,0 +1,447 @@
+# Manual & API Testing Project | Evershop Demo Website
+
+> A complete industry-style Software Testing Life Cycle (STLC) project performed on the Evershop Demo Website. This project demonstrates requirement analysis, test planning, manual test design, test execution, defect reporting, UI validation, REST API testing using Postman, and API automation using Newman.
+
+---
+
+# Project Overview
+
+This project simulates the responsibilities of a Software QA Engineer by following an end-to-end testing workflow used in software companies.
+
+Instead of focusing only on test case writing or API testing, this project starts from understanding business requirements and proceeds through every major phase of the Software Testing Life Cycle (STLC), including:
+
+- Requirement Analysis
+- Test Planning
+- Test Scenario Design
+- Manual Test Case Creation
+- Manual Test Execution
+- Defect Reporting
+- UI Validation
+- REST API Testing
+- API Automation using Newman
+- Test Reporting
+
+The application under test is the **Evershop Demo E-commerce Website**, where both frontend functionality and backend REST APIs were thoroughly validated.
+
+---
+
+# Project Objectives
+
+- Understand business and functional requirements.
+- Design comprehensive manual test cases.
+- Validate core e-commerce functionalities.
+- Identify and document software defects.
+- Perform UI verification through manual execution.
+- Validate REST APIs using Postman.
+- Automate API execution using Newman.
+- Generate detailed execution reports.
+
+---
+
+# Software Testing Life Cycle (STLC)
+
+```
+Requirement Analysis
+        │
+        ▼
+Test Planning
+        │
+        ▼
+Test Scenario Design
+        │
+        ▼
+Manual Test Case Design
+        │
+        ▼
+Manual Test Execution
+        │
+        ▼
+Defect Reporting
+        │
+        ▼
+UI Validation
+        │
+        ▼
+REST API Testing
+        │
+        ▼
+API Automation (Newman)
+        │
+        ▼
+Execution Report
+```
+
+---
+
+# Project Structure
+
+```
+Manual-API-Testing
+│
+├── 01 Requirement Analysis
+│
+├── 02 Manual Test Cases
+│
+├── 03 Test Execution
+│
+├── 04 Defect Report
+│
+├── 05 API Testing
+│     ├── Postman Collection
+│     ├── Environment
+│     ├── API Validation
+│     ├── JavaScript Test Scripts
+│     └── Screenshots
+│
+├── Newman Report
+│
+└── README.md
+```
+
+---
+
+# Requirement Analysis
+
+The project begins with analyzing the software requirements before any testing activities.
+
+The requirement analysis includes:
+
+- Business Requirements
+- Functional Requirements
+- Non-functional Requirements
+- User Stories
+- Acceptance Criteria
+- Assumptions
+- Scope Identification
+
+This phase ensures that testing is aligned with business expectations.
+
+---
+
+# Manual Test Design
+
+Comprehensive manual test cases were created by considering both positive and negative scenarios.
+
+The test cases include:
+
+- Test Scenario ID
+- Test Case ID
+- Module
+- Preconditions
+- Test Steps
+- Expected Results
+- Actual Results
+- Priority
+- Severity
+- Status
+
+The designed test cases cover various functional areas of the application.
+
+---
+
+# Manual Test Execution
+
+All designed test cases were executed manually on the Evershop Demo Website.
+
+Execution evidence is included with screenshots for every important scenario.
+
+Executed modules include:
+
+- Product Search
+- Search Suggestions
+- Product Listing
+- Product Variants
+- Cart Operations
+- Search Validation
+- Negative Search
+- Multilingual Search
+- Invalid Search
+- UI Verification
+
+---
+
+# Defect Reporting
+
+During execution several defects were identified and documented.
+
+Each defect includes:
+
+- Bug ID
+- Summary
+- Description
+- Severity
+- Priority
+- Preconditions
+- Steps to Reproduce
+- Expected Result
+- Actual Result
+- Status
+- Supporting Screenshot
+
+Example defects include:
+
+- Search returns incorrect product variant
+- Voice search functionality missing
+- Conversational search not implemented
+- Product search inconsistency
+- Search filtering issues
+
+---
+
+# UI Testing
+
+The UI testing validates different user interactions including:
+
+### Search Functionality
+
+- Exact product search
+- Partial keyword search
+- Search suggestions
+- Invalid search
+- Empty search
+- Multilingual input
+- Special character validation
+
+### Search Result Validation
+
+Verified:
+
+- Product names
+- Search suggestions
+- No-result messages
+- Product listing
+- Navigation behavior
+
+---
+
+# API Testing
+
+REST APIs were tested using Postman.
+
+The API collection validates complete cart functionality.
+
+### APIs Covered
+
+### Search Product
+
+- GET
+
+Validated:
+
+- Status Code
+- Response Structure
+- Product List
+- Product Name
+- Product SKU
+- Product Price
+
+---
+
+### View Cart
+
+- GET
+
+Validated:
+
+- Cart Items
+- Product Quantity
+- Cart UUID
+- Item UUID
+
+---
+
+### Add to Cart
+
+- POST
+
+Validated:
+
+- Status Code
+- Product Addition
+- Quantity
+- Cart Creation
+- Dynamic Product Selection
+
+---
+
+### Increase Product Quantity
+
+- PATCH
+
+Validated:
+
+- Quantity Increment
+- Updated Response
+- Business Logic Validation
+
+---
+
+### Decrease Product Quantity
+
+- PATCH
+
+Validated:
+
+- Quantity Decrement
+- Updated Quantity
+- Response Validation
+
+---
+
+### Remove Product
+
+- DELETE
+
+Validated:
+
+- Product Removal
+- Product SKU
+- Successful Deletion
+- Error Handling
+
+---
+
+# Dynamic API Validation
+
+JavaScript was used extensively inside Postman for dynamic testing.
+
+Implemented features include:
+
+- Collection Variables
+- Dynamic Product Selection
+- Random Product Generation
+- Quantity Validation
+- UUID Extraction
+- JSON Parsing
+- Response Validation
+- Business Logic Assertions
+- Error Handling using try-catch
+
+---
+
+# API Automation
+
+The Postman collection was automated using Newman CLI.
+
+Automation includes:
+
+- Command Line Execution
+- Automated Assertion Execution
+- Console Logging
+- HTML Report Generation
+
+Example command:
+
+```bash
+newman run API_Testing.postman_collection.json
+```
+
+---
+
+# Validation Techniques Used
+
+### Manual Testing
+
+- Functional Testing
+- UI Testing
+- Positive Testing
+- Negative Testing
+- Boundary Testing
+- Error Validation
+- Smoke Testing
+
+### API Testing
+
+- Status Code Validation
+- JSON Schema Validation
+- Response Body Validation
+- Dynamic Assertions
+- CRUD Operation Validation
+- Variable Chaining
+- Error Handling
+- Business Rule Validation
+
+---
+
+# Tools & Technologies
+
+| Tool | Purpose |
+|-------|----------|
+| Excel | Requirement Analysis & Test Cases |
+| Postman | REST API Testing |
+| JavaScript | API Assertions |
+| Newman | API Automation |
+| VS Code | Script Development |
+| Git | Version Control |
+| GitHub | Repository Hosting |
+
+---
+
+# Skills Demonstrated
+
+- Requirement Analysis
+- Software Testing Life Cycle (STLC)
+- Test Planning
+- Manual Testing
+- Test Case Design
+- Test Execution
+- Defect Reporting
+- UI Testing
+- REST API Testing
+- Postman
+- Newman
+- JavaScript
+- API Automation
+- Dynamic Variable Handling
+- JSON Parsing
+- Error Handling
+- Git & GitHub
+
+---
+
+# Key Learning Outcomes
+
+This project demonstrates practical experience in executing a complete QA workflow similar to that followed in software companies.
+
+Key learnings include:
+
+- Understanding software requirements
+- Designing effective manual test cases
+- Executing and documenting test results
+- Reporting defects professionally
+- Validating frontend functionality
+- Testing REST APIs
+- Writing dynamic JavaScript assertions
+- Automating API execution using Newman
+- Managing test artifacts using GitHub
+
+---
+
+# Repository Contents
+
+- Requirement Analysis Document
+- Manual Test Cases
+- Test Execution Report
+- Defect Report
+- UI Testing Evidence
+- API Testing Collection
+- Postman Scripts
+- Newman Execution Report
+- Supporting Screenshots
+
+---
+
+# Author
+
+**Sazia Afrin**
+
+Aspiring Software QA Engineer
+
+- Manual Testing
+- API Testing
+- Postman
+- Newman
+- JavaScript
+- Git & GitHub
+
+---
