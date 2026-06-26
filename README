@@ -1,4 +1,10 @@
-# Manual & API Testing Project | Evershop Demo Website
+<h1 align="center">
+  🚀 Manual & API Testing Project | Evershop Demo Website
+</h1>
+
+<p align="center">
+  <b>Complete End-to-End STLC Project with Manual Testing, REST API Testing, and Newman Automation</b>
+</p>
 
 > A complete industry-style Software Testing Life Cycle (STLC) project performed on the Evershop Demo Website. This project demonstrates requirement analysis, test planning, manual test design, test execution, defect reporting, UI validation, REST API testing using Postman, and API automation using Newman.
 
