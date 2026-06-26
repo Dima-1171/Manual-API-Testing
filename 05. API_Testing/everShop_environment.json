@@ -1,0 +1,16 @@
+{
+	"id": "3934ad86-5c3b-42c8-aeda-6252af9e6c27",
+	"name": "everShop_Project",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-06-26T09:35:28.745Z",
+	"_postman_exported_using": "Postman/11.87.2"
+}

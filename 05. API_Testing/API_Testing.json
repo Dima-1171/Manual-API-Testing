@@ -1,0 +1,696 @@
+{
+  "info": {
+    "_postman_id": "f7a6533f-cf9e-4e91-a7bb-e6789f53fd8e",
+    "name": "API_Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51322696",
+    "_collection_link": "https://go.postman.co/collection/51322696-f7a6533f-cf9e-4e91-a7bb-e6789f53fd8e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "search",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const text = [\"Desk Pen Holder\", \"Ceramic Candy Bowl\", \"Ceramic Coffee Cup\"]\r",
+              "\r",
+              "function getRandomIntNumber(min, max) {\r",
+              "    const minCeiled = Math.ceil(min);\r",
+              "    const maxFloored = Math.floor(max);\r",
+              "    return Math.floor(Math.random() * (maxFloored - minCeiled + 1)) + minCeiled;\r",
+              "}\r",
+              "\r",
+              "const index = getRandomIntNumber(0, 2)\r",
+              "const searchedText = text[index]\r",
+              "pm.collectionVariables.set(\"searched_text\", searchedText);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "const searchedText = pm.collectionVariables.get(\"searched_text\");\r",
+              "console.log(\"Searched Text :\",searchedText);\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Validate success value is true\", () => {\r",
+              "    pm.expect(responseBody.success).to.eql(true);\r",
+              "})\r",
+              "\r",
+              "const items = responseBody.eContext.graphqlResponse.eqg118nmnimiekh.products.items;\r",
+              "for(let i=0; i< items.length; i++){\r",
+              "    console.log(items[i].name)\r",
+              "    pm.test(`Validate searched text within ${items[i].name}`, () => {\r",
+              "        pm.expect(items[i].name).to.contain(searchedText);\r",
+              "    })\r",
+              "}\r",
+              "\r",
+              "function getRandomIntNumber(min, max) {\r",
+              "    const minCeiled = Math.ceil(min);\r",
+              "    const maxFloored = Math.floor(max);\r",
+              "    return Math.floor(Math.random() * (maxFloored - minCeiled + 1)) + minCeiled;\r",
+              "}\r",
+              "\r",
+              "const index = getRandomIntNumber(0, items.length - 1);\r",
+              "const sku = items[index].sku;\r",
+              "console.log(`Product sku :${sku}`);\r",
+              "pm.collectionVariables.set(\"product_sku\",sku);\r",
+              "\r",
+              "const price = responseBody.eContext.graphqlResponse.eqg118nmnimiekh.products.items[index].price.regular;\r",
+              "const value = items[index].price.regular.value;\r",
+              "console.log(`Product price :${value}`);\r",
+              "pm.collectionVariables.set(\"product_price\",value);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/search?keyword={{searched_text}}&ajax=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "search"
+          ],
+          "query": [
+            {
+              "key": "keyword",
+              "value": "{{searched_text}}"
+            },
+            {
+              "key": "ajax",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "pre_viewCart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "\r",
+              "let prevQty = 0;\r",
+              "try{\r",
+              "     prevQty= responseBody.eContext.graphqlResponse.eqg118nmnimiemq.totalQty;\r",
+              "     pm.collectionVariables.set(\"prev_Qty\",prevQty);\r",
+              "     console.log(\"previous Qty:\",prevQty);\r",
+              "}catch(err){\r",
+              "    console.log(\"The cart is empty\");\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/cart?ajax=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cart"
+          ],
+          "query": [
+            {
+              "key": "ajax",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "addtocart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "\r",
+              "const currentQty = pm.collectionVariables.get(\"product_qty\");\r",
+              "console.log(\"Current Quantity:\",currentQty);\r",
+              "\r",
+              "const productQty = responseBody.data.item.qty;\r",
+              "console.log(\"Product Quantity:\",productQty);\r",
+              "\r",
+              "pm.test(`Validate new product added quantity is ${productQty}`, () => {\r",
+              "    pm.expect(productQty).to.equal(currentQty);\r",
+              "})\r",
+              "\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "\r",
+              "function getRandomIntNumber(min, max) {\r",
+              "    const minCeiled = Math.ceil(min);\r",
+              "    const maxFloored = Math.floor(max);\r",
+              "    return Math.floor(Math.random() * (maxFloored - minCeiled + 1)) + minCeiled;\r",
+              "}\r",
+              "\r",
+              "const qty = getRandomIntNumber(0,4);\r",
+              "pm.collectionVariables.set(\"product_qty\",qty);\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n{\r\n    \"sku\":\"{{product_sku}}\",\r\n     \"qty\":{{product_qty}}\r\n     }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/cart/mine/items?ajax =true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart",
+            "mine",
+            "items"
+          ],
+          "query": [
+            {
+              "key": "ajax ",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post_viewCart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "let qty = 0;\r",
+              "try{\r",
+              "     qty = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.totalQty;\r",
+              "    //   pm.collectionVariables.set(\"totalQty_After_add\",qty);\r",
+              "\r",
+              "    // const expectedQty = pm.collectionVariables.get(\"total_Qty\");\r",
+              "\r",
+              "      const expectedQty = Number(pm.collectionVariables.get(\"total_Qty\"));\r",
+              "\r",
+              "pm.test(`Validate total quantity is equal to ${expectedQty}`, () =>{\r",
+              "    pm.expect(qty).to.eql(expectedQty);\r",
+              "}) \r",
+              " pm.collectionVariables.set(\"totalQty_After_add\",qty);\r",
+              "}catch(err){\r",
+              "    console.log(\"The cart is empty\");\r",
+              "}\r",
+              "\r",
+              "// let item, uodateItem;\r",
+              "// try{\r",
+              "//     items = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.items;\r",
+              "//     updateItem = items[0].updateQtyApi;\r",
+              "//     pm.collectionVariables.set(\"increase_api\",updateItem);\r",
+              "//     console.log(\"Update item url :\",updateItem);\r",
+              "// }catch(err){\r",
+              "//     console.log(\"There is no product in the cart\");\r",
+              "// }\r",
+              "\r",
+              "let cartId = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.uuid;\r",
+              "pm.collectionVariables.set(\"cart_Id\",cartId);\r",
+              "console.log(cartId);\r",
+              "\r",
+              "let itemUuid = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.items[0].uuid;\r",
+              "pm.collectionVariables.set(\"item_Uuid\",itemUuid);\r",
+              "console.log(itemUuid);\r",
+              "\r",
+              "let itemQty = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.items[0].qty;\r",
+              "console.log(\"item QTY:\",itemQty);\r",
+              "pm.collectionVariables.set(\"item_Qty\",itemQty);\r",
+              "\r",
+              "\r",
+              "let item,removeApi;\r",
+              "try{\r",
+              "    items = responseBody.eContext.graphqlResponse.eqg118nmnimiemq.items;\r",
+              "    removeapi = items[0].removeApi;\r",
+              "    pm.collectionVariables.set(\"remove_api\",removeapi);\r",
+              "}catch(err){\r",
+              "    console.log(\"There is no product in the cart\");\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const addedQty = pm.collectionVariables.get(\"product_qty\");\r",
+              "const prevQty = pm.collectionVariables.get(\"prev_Qty\");\r",
+              "console.log(prevQty);\r",
+              "\r",
+              "// let totalQty;\r",
+              "// try{\r",
+              "const totalQty = prevQty + addedQty ;\r",
+              "console.log(totalQty);\r",
+              "// }catch(err){\r",
+              "// console.log(\"There is no prevoius quantity\");\r",
+              "// totalQty = addedQty;\r",
+              "// }\r",
+              "\r",
+              "pm.collectionVariables.set(\"total_Qty\", totalQty);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/cart?ajax=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "cart"
+          ],
+          "query": [
+            {
+              "key": "ajax",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "item_Increase",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "const qtyBeforeIncrease = pm.collectionVariables.get(\"item_Qty\");\r",
+              "const qtyAfterAdd = responseBody.data.item.qty;\r",
+              "\r",
+              "\r",
+              "const expectAfter = qtyBeforeIncrease + 1;\r",
+              "\r",
+              "pm.test(\"Validate quantity is incremented by 1\", () => {\r",
+              "    pm.expect(qtyAfterAdd).to.equal(expectAfter);\r",
+              "})\r",
+              "\r",
+              "pm.collectionVariables.set(\"after_increase\", qtyAfterAdd);\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.get(\"cart_Id\");\r",
+              "pm.collectionVariables.get(\"item_Uuid\");\r",
+              "// pm.collectionVariables.get(\"increase_api\");\r",
+              "//https://demo.evershop.io/api/cart/{{cart_Id}}/items/{{item_Uuid}}?ajax=true\r",
+              "// https://demo.evershop.io/api/cart/{{increase_api}}?ajax=true"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"qty\":\"1\",\r\n\"action\":\"increase\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/cart/{{cart_Id}}/items/{{item_Uuid}}?ajax=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart",
+            "{{cart_Id}}",
+            "items",
+            "{{item_Uuid}}"
+          ],
+          "query": [
+            {
+              "key": "ajax",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "item_Decrease",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "\r",
+              "const afterIncrement = pm.collectionVariables.get(\"after_increase\");\r",
+              "const qtyAfterDecrement = responseBody.data.item.qty;\r",
+              "\r",
+              "\r",
+              "const expectQty = afterIncrement - 1;\r",
+              "\r",
+              "pm.test(\"Validate quantity is decremented by 1\", () => {\r",
+              "    pm.expect(qtyAfterDecrement).to.equal(expectQty);\r",
+              "})\r",
+              "\r",
+              "// pm.collectionVariables.set(\"after_increase\", qtyAfterAdd);\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.get(\"cart_Id\");\r",
+              "pm.collectionVariables.get(\"item_Uuid\");\r",
+              "// pm.collectionVariables.get(\"increase_api\");\r",
+              "//https://demo.evershop.io/api/cart/{{cart_Id}}/items/{{item_Uuid}}?ajax=true\r",
+              "// https://demo.evershop.io/api/cart/{{increase_api}}?ajax=true"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"qty\":\"1\",\r\n\"action\":\"decrease\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/cart/{{cart_Id}}/items/{{item_Uuid}}?ajax=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "cart",
+            "{{cart_Id}}",
+            "items",
+            "{{item_Uuid}}"
+          ],
+          "query": [
+            {
+              "key": "ajax",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "removeProduct",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseBody = pm.response.json();\r",
+              "\r",
+              "\r",
+              "if(responseBody.data && responseBody.data.item){\r",
+              "\r",
+              "pm.test(\"Validate status code is 200\", () => {\r",
+              "    pm.expect(pm.response.code).to.eql(200);\r",
+              "})\r",
+              "\r",
+              "const expectedSku = pm.collectionVariables.get(\"product_sku\");\r",
+              "const actualSku = responseBody.data.item.product_sku;\r",
+              "\r",
+              "pm.test(`Validate product SKU matches ${actualSku}`, () => {\r",
+              "    pm.expect(actualSku).to.equal(expectedSku);\r",
+              "});\r",
+              "\r",
+              "}\r",
+              "else if(responseBody.error){\r",
+              "    pm.test(\"Validate status code is 500\", () => {\r",
+              "        pm.expect(pm.response.code).to.eql(500);\r",
+              "    });\r",
+              "\r",
+              "    pm.test(\"Validate error message is 'Item not found'\", () => {\r",
+              "        pm.expect(responseBody.error.message).to.eql(\"Item not found\");\r",
+              "    });\r",
+              "\r",
+              "    pm.test(\"Validate status is 200\", () => {\r",
+              "        pm.expect(responseBody.error.status).to.eql(500);\r",
+              "    });\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}{{remove_api}}",
+          "host": [
+            "{{base_url}}{{remove_api}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "Searched Text ",
+      "value": ""
+    },
+    {
+      "key": "searchText",
+      "value": ""
+    },
+    {
+      "key": "Searched_Text ",
+      "value": ""
+    },
+    {
+      "key": "searched_Text ",
+      "value": ""
+    },
+    {
+      "key": "searched_Text",
+      "value": ""
+    },
+    {
+      "key": "searched_text",
+      "value": ""
+    },
+    {
+      "key": "product_sku",
+      "value": ""
+    },
+    {
+      "key": "product_price",
+      "value": ""
+    },
+    {
+      "key": "product_qty",
+      "value": ""
+    },
+    {
+      "key": "prev_Qty",
+      "value": ""
+    },
+    {
+      "key": "prev_OqQ=ty",
+      "value": ""
+    },
+    {
+      "key": "total_Qty",
+      "value": ""
+    },
+    {
+      "key": "remove_api",
+      "value": ""
+    },
+    {
+      "key": "totalQty_After_add",
+      "value": ""
+    },
+    {
+      "key": "increase_api",
+      "value": ""
+    },
+    {
+      "key": "cart_Id",
+      "value": ""
+    },
+    {
+      "key": "item_Uuid",
+      "value": ""
+    },
+    {
+      "key": "item_Qty",
+      "value": ""
+    },
+    {
+      "key": "addedproduct_qty",
+      "value": ""
+    },
+    {
+      "key": "after_increase",
+      "value": ""
+    }
+  ]
+}
